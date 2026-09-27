@@ -14,6 +14,7 @@ Funksiyalar:
 O'rnatish va ishga tushirish uchun README.md faylini o'qing.
 """
 
+import os
 import sqlite3
 import logging
 from datetime import datetime, timedelta
@@ -26,8 +27,16 @@ from telegram.ext import (
 )
 
 # ============ SOZLAMALAR ============
-BOT_TOKEN = "BU_YERGA_OZ_TOKENINGIZNI_QOYING"  # @BotFather dan olinadi
+# Token endi kodga yozilmaydi — Railway'da "Variables" bo'limidan
+# BOT_TOKEN nomli o'zgaruvchi sifatida beriladi.
+BOT_TOKEN = os.environ.get("BOT_TOKEN")
 DB_PATH = "bot.db"
+
+if not BOT_TOKEN:
+    raise RuntimeError(
+        "BOT_TOKEN topilmadi! Railway'da Variables bo'limiga "
+        "BOT_TOKEN nomli environment variable qo'shing."
+    )
 
 logging.basicConfig(
     format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
